@@ -32,7 +32,7 @@ export const SITE = {
   // URLs
   // -----------------------------------------------------------------------------
   url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-  github: 'https://github.com/hrosenblume/',
+  github: '', // Add your GitHub URL
   
   // -----------------------------------------------------------------------------
   // Footer Links
@@ -40,8 +40,8 @@ export const SITE = {
   // Shown in the homepage footer
   // type: 'email' will use the EmailLink component (obfuscated mailto)
   footerLinks: [
-    { label: 'GitHub', href: 'https://github.com/hrosenblume/' },
-    { label: 'Twitter', href: 'https://twitter.com/hrosenblume' },
+    { label: 'GitHub', href: '' },
+    { label: 'Twitter', href: '' },
     { label: 'Email', type: 'email' },
   ] as FooterLink[],
   
