@@ -19,8 +19,8 @@ export const SITE = {
   // -----------------------------------------------------------------------------
   // Branding
   // -----------------------------------------------------------------------------
-  name: 'Local',
-  tagline: 'Playing around with Ordos Staging Website',
+  name: 'Ordos Playground',
+  tagline: 'Playing around with Ordos Website',
   description: 'Production-ready Next.js 15 starter with auth, admin dashboard, and deployment infrastructure.',
   
   // -----------------------------------------------------------------------------
