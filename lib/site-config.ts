@@ -19,8 +19,8 @@ export const SITE = {
   // -----------------------------------------------------------------------------
   // Branding
   // -----------------------------------------------------------------------------
-  name: 'Your App',
-  tagline: 'A modern Next.js starter template',
+  name: 'Playground',
+  tagline: 'Playing around with Ordos Website',
   description: 'Production-ready Next.js 15 starter with auth, admin dashboard, and deployment infrastructure.',
   
   // -----------------------------------------------------------------------------
