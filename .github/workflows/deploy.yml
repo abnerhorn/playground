@@ -1,6 +1,17 @@
 # =============================================================================
 # GitHub Actions Deploy Workflow
 # =============================================================================
+#
+# Automatically deploys to your DigitalOcean droplet when you push:
+#   - Push to `main` branch → Deploys to production (/var/www/app, port 3000)
+#   - Push to `dev` branch  → Deploys to staging (/var/www/app-staging, port 3001)
+#
+# Required GitHub Secrets (Settings → Secrets → Actions):
+#   - DO_HOST:    Your droplet IP address (e.g., 123.456.789.0)
+#   - DO_USER:    SSH username (usually 'root')
+#   - DO_SSH_KEY: Private SSH key (entire contents of ~/.ssh/id_rsa)
+#
+# =============================================================================
 
 name: Deploy
 
