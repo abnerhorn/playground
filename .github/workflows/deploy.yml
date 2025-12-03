@@ -11,16 +11,6 @@
 #   - DO_USER:    SSH username (usually 'root')
 #   - DO_SSH_KEY: Private SSH key (entire contents of ~/.ssh/id_rsa)
 #
-# What this workflow does:
-#   1. SSH into your droplet
-#   2. Navigate to the app directory
-#   3. Pull latest code from GitHub
-#   4. Install dependencies
-#   5. Generate Prisma client
-#   6. Push database schema changes
-#   7. Build the app
-#   8. Restart PM2 process
-#
 # =============================================================================
 
 name: Deploy
@@ -47,9 +37,12 @@ jobs:
             git reset --hard origin/main
             npm install --production=false
             export $(grep -v '^#' .env.local | xargs)
+            export NODE_OPTIONS="--max-old-space-size=1024"
             npx prisma generate --schema=prisma/schema.postgresql.prisma
             npx prisma db push --schema=prisma/schema.postgresql.prisma --skip-generate
             npm run build:prod
+            cp -r public .next/standalone/
+            cp -r .next/static .next/standalone/.next/
             pm2 restart app-prod
 
       - name: Deploy to Staging
@@ -66,8 +59,10 @@ jobs:
             git reset --hard origin/dev
             npm install --production=false
             export $(grep -v '^#' .env.local | xargs)
+            export NODE_OPTIONS="--max-old-space-size=1024"
             npx prisma generate --schema=prisma/schema.postgresql.prisma
             npx prisma db push --schema=prisma/schema.postgresql.prisma --skip-generate
             npm run build:prod
+            cp -r public .next/standalone/
+            cp -r .next/static .next/standalone/.next/
             pm2 restart app-staging
-
