@@ -25,11 +25,8 @@ if [ -d "stories" ]; then
   deleted+=("stories/")
 fi
 
-# Remove deployment guide
-if [ -d "app/deploy" ]; then
-  rm -rf app/deploy/
-  deleted+=("app/deploy/")
-fi
+# NOTE: app/deploy/ (deploy guide) is intentionally kept!
+# The DeployBanner will link to it until production is deployed.
 
 # Remove launch wizard
 if [ -d "app/launch" ]; then
@@ -66,5 +63,6 @@ echo ""
 echo "Next steps:"
 echo "  1. Build your app following plans/BUILD.md"
 echo "  2. Run 'npm run dev' to start developing"
+echo "  3. When ready to deploy, visit /deploy for the guide"
 echo ""
 

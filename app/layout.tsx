@@ -14,6 +14,7 @@ import { Inter } from 'next/font/google'
 import { Providers } from './providers'
 import { Metadata } from 'next'
 import { SITE } from '@/lib/site-config'
+import { DeployBanner } from '@/components/DeployBanner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
+        <DeployBanner />
         <Providers>{children}</Providers>
       </body>
     </html>

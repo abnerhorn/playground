@@ -26,12 +26,10 @@ export const SITE = {
   // -----------------------------------------------------------------------------
   // Deploy Guide (removable feature)
   // -----------------------------------------------------------------------------
-  // Toggle: Set to false to hide the deploy banner on the homepage.
-  // Full removal:
-  //   1. Set this to false (or delete this property)
-  //   2. Delete the app/deploy/ folder
-  //   3. Optionally remove the banner JSX block from app/page.tsx (~lines 47-61)
-  showDeployBanner: true,
+  // The smart DeployBanner component in the root layout handles this now.
+  // It automatically hides once your app is deployed to production.
+  // Set to true only if you want a SECOND banner on the homepage.
+  showDeployBanner: false,
   
   // -----------------------------------------------------------------------------
   // Contact

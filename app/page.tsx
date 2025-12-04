@@ -186,7 +186,7 @@ export default async function Home() {
       <footer className="max-w-5xl mx-auto px-6 py-12 border-t border-border">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            Enterprise Next.js template optimized for Cursor
+            Next.js template optimized for Cursor
           </p>
           <div className="flex items-center gap-6">
             {SITE.footerLinks.map((link) => (

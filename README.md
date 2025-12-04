@@ -68,6 +68,7 @@ After setup, you'll have:
 | Page | URL | Description |
 |------|-----|-------------|
 | 🏠 Homepage | `localhost:3000` | Landing page with features |
+| 🚀 Launch Wizard | `/launch` | Personalize template & generate build spec |
 | 🔐 Sign In | `/auth/signin` | Google OAuth authentication |
 | 👤 Admin Dashboard | `/admin` | Manage users and roles |
 | 📦 Deploy Guide | `/deploy` | Interactive deployment walkthrough |
@@ -77,10 +78,12 @@ After setup, you'll have:
 ## ✨ Features
 
 - **Next.js 15** — App Router, React 19, server components
+- **Launch Wizard** — Personalize template, generate build specs for Cursor
 - **Authentication** — Google OAuth with role-based access control
 - **Admin Dashboard** — User management with responsive views
 - **shadcn/ui** — Beautiful, accessible components
 - **Dark Mode** — System-aware theme switching
+- **Smart Deploy Banner** — Auto-hides once production is live
 - **Deployment Ready** — DigitalOcean, GitHub Actions CI/CD
 - **Mobile Testing** — ngrok tunnel for testing on real devices
 - **Cursor AI Integration** — Pre-configured rules and context
@@ -95,6 +98,43 @@ After setup, you'll have:
 | Can't sign in with Google | Check that `ADMIN_EMAIL` in `.env.local` matches your Google email |
 | "Access Denied" after sign in | Run `npm run db:seed` to add yourself as admin |
 | Port already in use | Kill the process: `lsof -ti:3000 \| xargs kill` |
+
+---
+
+## 🚀 Launch Wizard
+
+Ready to build your own app? The Launch Wizard at `/launch` helps you:
+
+1. **Personalize** — Enter your project name, tagline, and description
+2. **Generate** — Creates `BUILD.md`, `README.md`, `site-config.ts`, and task lists
+3. **Build** — Copy the generated Cursor prompt and let AI build your app
+
+**How it works:**
+
+```
+Visit /launch → Fill in your app idea → Copy prompt → Paste into Cursor (Cmd+L)
+```
+
+The wizard also sets up deployment detection — a unique `APP_ID` that lets the deploy banner know when your production site is live.
+
+---
+
+## 🎯 Smart Deploy Banner
+
+A green banner appears at the top of your app reminding you to deploy. It automatically:
+
+- **Hides on `/deploy`** — You're already reading the guide
+- **Hides in production** — End users never see it
+- **Hides when deployed** — Detects when your production URL is live
+
+**How detection works:**
+
+1. The Launch Wizard generates a unique `APP_ID` in `.env.local`
+2. The `/api/health` endpoint returns this ID
+3. The banner checks if production returns the same ID
+4. Match confirmed → banner disappears
+
+No manual steps needed — deploy your app and the banner goes away automatically.
 
 ---
 
@@ -242,26 +282,31 @@ Go to **Settings → Secrets → Actions**:
 
 ```
 app/
-├── api/                 # API routes
-│   ├── admin/users/     # User CRUD
-│   ├── auth/            # NextAuth
-│   └── health/          # Health check
-├── admin/               # Admin dashboard
-├── auth/                # Sign-in pages
-├── deploy/              # Deploy guide
-└── page.tsx             # Landing page
+├── api/
+│   ├── admin/users/        # User CRUD
+│   ├── auth/               # NextAuth
+│   ├── deployment-status/  # Deployment detection
+│   ├── health/             # Health check + APP_ID
+│   └── launch/             # Launch wizard API
+├── admin/                  # Admin dashboard
+├── auth/                   # Sign-in pages
+├── deploy/                 # Deploy guide
+├── launch/                 # Launch wizard UI
+└── page.tsx                # Landing page
 
 components/
-├── admin/               # Admin components
-├── ui/                  # shadcn/ui components
-└── [shared]             # ThemeToggle, Icons, etc.
+├── admin/                  # Admin components
+├── ui/                     # shadcn/ui components
+├── DeployBanner.tsx        # Smart deploy banner
+└── [shared]                # ThemeToggle, Icons, etc.
 
 lib/
-├── auth.ts              # NextAuth config
-├── db.ts                # Prisma client
-└── site-config.ts       # Site branding
+├── auth.ts                 # NextAuth config
+├── db.ts                   # Prisma client
+└── site-config.ts          # Site branding
 
-.cursor/rules/           # Cursor AI context
+.cursor/rules/              # Cursor AI context
+plans/                      # Build specs & roadmaps
 ```
 
 ---
@@ -274,6 +319,7 @@ lib/
 | `npm run setup` | One-command local setup |
 | `npm run setup:check` | Check prerequisites |
 | `npm run setup:validate` | Validate environment |
+| `npm run cleanup` | Remove template files after using Launch Wizard |
 
 ### Development
 | Command | Description |
@@ -316,8 +362,11 @@ export const SITE = {
 
 ### Remove Deploy Guide
 
-1. Set `showDeployBanner: false` in `lib/site-config.ts`
-2. Delete the `app/deploy/` folder
+The deploy banner auto-hides once you've deployed to production. To fully remove:
+
+1. Delete `app/deploy/` folder
+2. Delete `components/DeployBanner.tsx`
+3. Remove `<DeployBanner />` from `app/layout.tsx`
 
 ---
 

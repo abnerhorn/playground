@@ -237,7 +237,8 @@ Read plans/BUILD.md for the full spec.
 FIRST: Clean up the template by running:
 npm run cleanup
 
-This removes template files (stories/, deploy guide, launch wizard) and prepares the project for building.
+This removes template files (stories/, launch wizard) and prepares the project for building.
+The deploy guide at /deploy is kept — use it when you're ready to ship.
 
 THEN: Replace app/page.tsx with a clean homepage for ${data.projectName}.
 

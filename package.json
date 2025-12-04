@@ -21,7 +21,8 @@
     "db:seed:prod": "npx tsx --env-file=.env.local prisma/seed.ts --schema=prisma/schema.postgresql.prisma",
     "db:setup": "npm run db:push && npm run db:seed",
     "deploy:guide": "bash scripts/deploy-guide.sh",
-    "cleanup": "bash scripts/cleanup-template.sh"
+    "cleanup": "bash scripts/cleanup-template.sh",
+    "setup:ssh": "bash scripts/setup-ssh-key.sh"
   },
   "dependencies": {
     "@prisma/client": "^4.16.2",

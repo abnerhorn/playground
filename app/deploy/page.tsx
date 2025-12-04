@@ -71,8 +71,8 @@ function Term({ children }: { children: string }) {
   )
 }
 
-// Copy button component
-function CopyButton({ text }: { text: string }) {
+// Copy button component - with label option
+function CopyButton({ text, label = "Copy", size = "sm" }: { text: string; label?: string; size?: "sm" | "lg" }) {
   const [copied, setCopied] = useState(false)
   
   const copy = () => {
@@ -84,9 +84,62 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button 
       onClick={copy}
-      className="mt-2 px-3 py-1.5 bg-muted hover:bg-muted/80 rounded text-sm transition-colors"
+      className={cn(
+        "transition-all duration-200",
+        size === "lg" 
+          ? "px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg font-medium"
+          : "mt-2 px-3 py-1.5 bg-muted hover:bg-muted/80 rounded text-sm",
+        copied && "bg-green-500 text-white hover:bg-green-500"
+      )}
     >
-      {copied ? 'Copied!' : 'Copy'}
+      {copied ? '✓ Copied!' : `📋 ${label}`}
+    </button>
+  )
+}
+
+// Copy button for one-liner commands
+function OneLinerCopyButton({ text, label }: { text: string; label: string }) {
+  const [copied, setCopied] = useState(false)
+  
+  const copy = () => {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+  
+  return (
+    <button 
+      onClick={copy}
+      className={cn(
+        "mt-2 px-4 py-2 rounded-lg text-sm transition-colors",
+        copied 
+          ? "bg-green-500 text-white" 
+          : "bg-primary text-primary-foreground hover:bg-primary/90"
+      )}
+    >
+      {copied ? '✓ Copied!' : label}
+    </button>
+  )
+}
+
+// Download button for .env files
+function DownloadEnvButton({ content, filename = ".env.local" }: { content: string; filename?: string }) {
+  const download = () => {
+    const blob = new Blob([content], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+  
+  return (
+    <button 
+      onClick={download}
+      className="px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg font-medium transition-colors"
+    >
+      📥 Download {filename}
     </button>
   )
 }
@@ -99,6 +152,18 @@ function Code({ children, copyable = true }: { children: string, copyable?: bool
         <code>{children}</code>
       </pre>
       {copyable && <CopyButton text={children} />}
+    </div>
+  )
+}
+
+// One-liner code block with copy button
+function OneLiner({ children, label = "Copy" }: { children: string; label?: string }) {
+  return (
+    <div className="my-3">
+      <pre className="bg-background p-4 rounded-lg overflow-x-auto text-sm">
+        <code>{children}</code>
+      </pre>
+      <OneLinerCopyButton text={children} label={label} />
     </div>
   )
 }
@@ -134,10 +199,10 @@ function Warning({ children }: { children: React.ReactNode }) {
 }
 
 // Success box
-function Success({ children }: { children: React.ReactNode }) {
+function Important({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-green-500/10 border-l-4 border-green-500 p-4 rounded-r-lg my-4">
-      <div className="font-semibold text-green-600 dark:text-green-400 mb-1">Time Saver</div>
+      <div className="font-semibold text-green-600 dark:text-green-400 mb-1">Important</div>
       {children}
     </div>
   )
@@ -315,14 +380,14 @@ export default function DeployGuidePage() {
   const sections: Section[] = [
     {
       id: 1,
-      title: 'Local Development Setup',
+      title: '💻 Local Development Setup',
       time: isLocalhost ? 'Done!' : '~5 min',
       content: isLocalhost ? (
         // LOCALHOST: User ran npm run setup and is here
         <>
-          <Success>
+          <Important>
             <p>✅ You&apos;re here because <code>npm run setup</code> worked! Dependencies installed, database ready, dev server running.</p>
-          </Success>
+          </Important>
           
           <Explainer title="What just happened">
             The setup command already did everything needed for local development:
@@ -442,7 +507,7 @@ export default function DeployGuidePage() {
     },
     {
       id: 2,
-      title: 'Google Login Setup',
+      title: '🔐 Google Login Setup',
       time: '~5 min',
       content: (
         <>
@@ -505,7 +570,7 @@ export default function DeployGuidePage() {
             
             {(googleClientId || googleClientSecret || adminEmail) && (
               <div className="mt-4">
-                <p className="text-sm font-medium mb-2">Copy this to your .env.local:</p>
+                <p className="text-sm font-medium mb-2">Copy this to your <code className="bg-muted px-1 rounded">.env.local</code> file in Cursor (open it with <code className="bg-muted px-1 rounded">Cmd/Ctrl+P</code> → type &quot;.env.local&quot;):</p>
                 <Code>{`GOOGLE_CLIENT_ID=${googleClientId || 'your-client-id'}
 GOOGLE_CLIENT_SECRET=${googleClientSecret || 'your-client-secret'}
 ADMIN_EMAIL=${adminEmail || 'you@example.com'}
@@ -515,10 +580,13 @@ ADMIN_NAME=${adminName || 'Your Name'}`}</Code>
           </Step>
           
           <Step title="3. Restart and test">
-            <p className="mb-2">After updating .env.local, restart the dev server:</p>
+            <p className="mb-2">After updating .env.local, restart the dev server in Cursor&apos;s terminal:</p>
             <ol className="list-decimal ml-4 space-y-2 text-sm">
-              <li>Press <code className="bg-muted px-1.5 py-0.5 rounded">Ctrl+C</code> in the terminal to stop the server</li>
-              <li>Run <Code>npm run db:seed && npm run dev</Code></li>
+              <li>Press <code className="bg-muted px-1.5 py-0.5 rounded">Ctrl+C</code> in Cursor&apos;s terminal to stop the server</li>
+              <li>Run this command:</li>
+            </ol>
+            <Code>npm run db:seed && npm run dev</Code>
+            <ol className="list-decimal ml-4 space-y-2 text-sm mt-2" start={3}>
               <li>Open <a href="http://localhost:3000" target="_blank" className="text-primary hover:underline">localhost:3000</a> and sign in!</li>
             </ol>
           </Step>
@@ -547,7 +615,7 @@ ADMIN_NAME=${adminName || 'Your Name'}`}</Code>
     },
     {
       id: 3,
-      title: 'Mobile Testing (Optional)',
+      title: '📱 Mobile Testing (Optional)',
       time: '~5 min',
       content: (
         <>
@@ -577,7 +645,7 @@ ADMIN_NAME=${adminName || 'Your Name'}`}</Code>
             />
             {ngrokDomain && (
               <div className="mt-2">
-                <p className="text-sm mb-2">Add to .env.local:</p>
+                <p className="text-sm mb-2">Add these lines to your <code className="bg-muted px-1 rounded">.env.local</code> file in Cursor:</p>
                 <Code>{`NGROK_DOMAIN=${ngrokDomain}
 NGROK_OAUTH_EMAIL=${adminEmail || 'you@example.com'}`}</Code>
               </div>
@@ -590,15 +658,24 @@ NGROK_OAUTH_EMAIL=${adminEmail || 'you@example.com'}`}</Code>
           </Step>
           
           <Step title="4. Run with tunnel">
+            <p className="mb-2">In Cursor&apos;s terminal, run:</p>
             <Code>npm run dev:tunnel</Code>
-            <p className="mt-2">Open {ngrokDomain ? `https://${ngrokDomain}` : 'your ngrok URL'} on your phone!</p>
+            <p className="mt-3 mb-2">Then on your phone:</p>
+            <ol className="list-decimal ml-4 space-y-2 text-sm">
+              <li>Open your phone&apos;s browser (Safari or Chrome)</li>
+              <li>Go to: <code className="bg-muted px-2 py-0.5 rounded">{ngrokDomain ? `https://${ngrokDomain}` : 'https://your-domain.ngrok.dev'}</code></li>
+              <li>You&apos;ll see your app running — test sign in, navigation, etc.</li>
+            </ol>
+            <p className="mt-3 text-sm text-muted-foreground">
+              The tunnel stays active as long as the terminal is running. Press Ctrl+C to stop.
+            </p>
           </Step>
         </>
       ),
     },
     {
       id: 4,
-      title: 'Create Your Server',
+      title: '☁️ Create Your Server',
       time: '~15 min',
       content: (
         <>
@@ -607,7 +684,18 @@ NGROK_OAUTH_EMAIL=${adminEmail || 'you@example.com'}`}</Code>
             DigitalOcean is beginner-friendly (~$6/month).
           </Explainer>
           
-          <Step title="1. Create a DigitalOcean droplet">
+          <Step title="1. Generate an SSH key (if you don&apos;t have one)">
+            <p className="mb-2">In Cursor&apos;s terminal (<code className="bg-muted px-1 rounded">Ctrl+`</code>), check if you have an SSH key:</p>
+            <Code>cat ~/.ssh/id_ed25519.pub</Code>
+            <p className="mt-2 text-sm">If you see a key starting with <code className="bg-muted px-1 rounded">ssh-ed25519</code>, skip to step 2.</p>
+            <p className="mt-3 mb-2">If you get &quot;No such file&quot;, create a new key in Cursor&apos;s terminal:</p>
+            <Code>ssh-keygen -t ed25519 -C &quot;your-email@example.com&quot;</Code>
+            <p className="mt-2 text-sm text-muted-foreground">Press Enter 3 times to accept defaults (no passphrase is fine for now).</p>
+            <p className="mt-2 mb-2">Then copy your public key (still in Cursor&apos;s terminal):</p>
+            <Code>cat ~/.ssh/id_ed25519.pub</Code>
+          </Step>
+          
+          <Step title="2. Create a DigitalOcean droplet">
             <a 
               href="https://cloud.digitalocean.com/droplets/new" 
               target="_blank" 
@@ -619,11 +707,12 @@ NGROK_OAUTH_EMAIL=${adminEmail || 'you@example.com'}`}</Code>
             <ul className="list-disc ml-4 mt-3 space-y-1 text-sm">
               <li>Choose <strong>Ubuntu 22.04</strong></li>
               <li>Basic plan: <strong>$6/mo</strong> (1GB) or <strong>$12/mo</strong> (2GB)</li>
-              <li>Add your SSH key (or create password)</li>
+              <li>Under <strong>Authentication</strong> → select <strong>SSH keys</strong></li>
+              <li>Click <strong>New SSH Key</strong> → paste the key you copied above</li>
             </ul>
           </Step>
           
-          <Step title="2. Save your droplet IP">
+          <Step title="3. Save your droplet IP">
             <InputField
               label="Droplet IP Address"
               value={dropletIp}
@@ -632,40 +721,45 @@ NGROK_OAUTH_EMAIL=${adminEmail || 'you@example.com'}`}</Code>
             />
           </Step>
           
-          <Step title="3. Connect and run setup script">
+          <Step title="4. Connect to your server">
             <p className="mb-2">In Cursor&apos;s terminal (<code className="bg-muted px-1 rounded">Ctrl+`</code>), SSH into your server:</p>
-            <Code>{`ssh root@${ip}`}</Code>
+            <OneLiner label="Copy SSH command">{`ssh root@${ip}`}</OneLiner>
             
-            <p className="mt-4 mb-2">Then run these commands to set up the server:</p>
-            <Code>{`# Update system and install Node.js 20
-apt update && apt upgrade -y
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt install -y nodejs nginx
-systemctl enable nginx
-systemctl start nginx
-
-# Install PM2 globally
-npm install -g pm2
-
-# Generate SSH key for GitHub (press Enter 3 times)
-ssh-keygen -t ed25519 -C "deploy-key"
-
-# Create app directory
-mkdir -p /var/www
-
-# Show your deploy key (copy this for GitHub)
-cat ~/.ssh/id_ed25519.pub`}</Code>
-            
-            <p className="mt-2 text-sm">This installs Node.js 20, nginx, PM2, and generates your deploy key.</p>
-            
-            <Success>
-              <p>Copy the key that&apos;s displayed — you&apos;ll add it to GitHub next!</p>
-            </Success>
+            <Warning>
+              <p className="text-sm"><strong>First time?</strong> Type <code className="bg-muted px-1 rounded">yes</code> when asked about fingerprint.</p>
+            </Warning>
           </Step>
           
-          <Step title="4. Add deploy key to GitHub">
-            <p>Copy the key from the script output and add it to:</p>
-            <p className="mt-2"><strong>GitHub → {gh}/{repo} → Settings → Deploy keys → Add deploy key</strong></p>
+          <Step title="5. Run the setup script">
+            <p className="mb-2"><strong>On the server</strong> (you should see <code className="bg-muted px-1 rounded">root@your-droplet:~#</code>), paste this command:</p>
+            <OneLiner label="Copy setup command">{`curl -fsSL https://raw.githubusercontent.com/${gh}/${repo}/main/scripts/setup-server.sh | bash`}</OneLiner>
+            
+            <div className="bg-muted/50 rounded-lg p-4 my-4">
+              <p className="font-medium mb-2">This script installs:</p>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>• Node.js 20 (runs your app)</li>
+                <li>• nginx (web server)</li>
+                <li>• PM2 (keeps your app running)</li>
+                <li>• SSH key (so GitHub can connect)</li>
+              </ul>
+            </div>
+            
+            <Important>
+              <p>When the script finishes, it shows a key starting with <code className="bg-muted px-1 rounded">ssh-ed25519</code>. Copy this entire key — you need it for the next step.</p>
+            </Important>
+          </Step>
+          
+          <Step title="6. Add deploy key to GitHub">
+            <p className="mb-3">Copy the key from the script and add it here:</p>
+            <a 
+              href={`https://github.com/${gh}/${repo}/settings/keys/new`}
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              Add Deploy Key on GitHub →
+            </a>
+            <p className="mt-2 text-sm text-muted-foreground">Check &quot;Allow write access&quot; when adding.</p>
           </Step>
           
           <h3 className="font-semibold mt-6 mb-3">Checklist</h3>
@@ -685,7 +779,7 @@ cat ~/.ssh/id_ed25519.pub`}</Code>
     },
     {
       id: 5,
-      title: 'Set Up Database',
+      title: '🗄️ Set Up Database',
       time: '~8 min',
       content: (
         <>
@@ -734,7 +828,7 @@ cat ~/.ssh/id_ed25519.pub`}</Code>
     },
     {
       id: 6,
-      title: 'Deploy Your App',
+      title: '🚀 Deploy Your App',
       time: '~10 min',
       content: (
         <>
@@ -760,33 +854,56 @@ cat ~/.ssh/id_ed25519.pub`}</Code>
           </Step>
           
           <Step title="2. Your production .env.local">
-            <p className="mb-2">Copy this entire block to your server&apos;s .env.local:</p>
-            <Code>{`DATABASE_URL_PROD="${dbConnectionString || 'postgresql://your-connection-string'}"
+            <p className="mb-3">Your environment file (auto-generated from your inputs):</p>
+            <Code copyable={false}>{`DATABASE_URL_PROD="${dbConnectionString || 'postgresql://your-connection-string'}"
 NEXTAUTH_SECRET="${nextAuthSecret || 'click-generate-secret-above'}"
 GOOGLE_CLIENT_ID=${googleClientId || 'your-client-id'}
 GOOGLE_CLIENT_SECRET=${googleClientSecret || 'your-client-secret'}
 NEXT_PUBLIC_SITE_URL=https://${domain}
 ADMIN_EMAIL=${adminEmail || 'you@example.com'}
 ADMIN_NAME=${adminName || 'Your Name'}`}</Code>
+            <div className="flex gap-3 mt-3">
+              <DownloadEnvButton 
+                content={`DATABASE_URL_PROD="${dbConnectionString || 'postgresql://your-connection-string'}"
+NEXTAUTH_SECRET="${nextAuthSecret || 'click-generate-secret-above'}"
+GOOGLE_CLIENT_ID=${googleClientId || 'your-client-id'}
+GOOGLE_CLIENT_SECRET=${googleClientSecret || 'your-client-secret'}
+NEXT_PUBLIC_SITE_URL=https://${domain}
+ADMIN_EMAIL=${adminEmail || 'you@example.com'}
+ADMIN_NAME=${adminName || 'Your Name'}`}
+                filename="env.production.txt"
+              />
+              <CopyButton 
+                text={`DATABASE_URL_PROD="${dbConnectionString || 'postgresql://your-connection-string'}"
+NEXTAUTH_SECRET="${nextAuthSecret || 'click-generate-secret-above'}"
+GOOGLE_CLIENT_ID=${googleClientId || 'your-client-id'}
+GOOGLE_CLIENT_SECRET=${googleClientSecret || 'your-client-secret'}
+NEXT_PUBLIC_SITE_URL=https://${domain}
+ADMIN_EMAIL=${adminEmail || 'you@example.com'}
+ADMIN_NAME=${adminName || 'Your Name'}`}
+                label="Copy to Clipboard"
+                size="lg"
+              />
+            </div>
           </Step>
           
           <Step title="3. Clone and deploy on server">
-            <p className="mb-2">In Cursor&apos;s terminal, SSH into your server and run:</p>
-            <Code>{`cd /var/www
-git clone git@github.com:${gh}/${repo}.git app
-cd app
-
-# Create .env.local with the config above
-nano .env.local
-
-# Install, build, and start
-npm install
-npm run db:push:prod
-npm run db:seed:prod
-npm run build:prod
-pm2 start ecosystem.config.js
-pm2 save
-pm2 startup`}</Code>
+            <p className="mb-2">In Cursor&apos;s terminal, SSH into your server:</p>
+            <Code>{`ssh root@${ip}`}</Code>
+            
+            <p className="mt-4 mb-2"><strong>On the server</strong>, clone the repo and create the env file:</p>
+            <OneLiner label="Copy clone command">{`cd /var/www && git clone git@github.com:${gh}/${repo}.git app && cd app && nano .env.local`}</OneLiner>
+            
+            <div className="bg-muted/50 rounded-lg p-3 my-3 text-sm">
+              <p className="font-medium mb-1">📝 In nano (on the server):</p>
+              <ol className="list-decimal ml-4 space-y-1">
+                <li>Paste the .env.local content from Step 2</li>
+                <li>Press <code className="bg-background px-1 rounded">Ctrl+X</code> → <code className="bg-background px-1 rounded">Y</code> → <code className="bg-background px-1 rounded">Enter</code></li>
+              </ol>
+            </div>
+            
+            <p className="mb-2"><strong>Still on the server</strong>, build and start the app:</p>
+            <OneLiner label="Copy build commands">{`npm install && npm run db:push:prod && npm run db:seed:prod && npm run build:prod && pm2 start ecosystem.config.js && pm2 save && pm2 startup`}</OneLiner>
           </Step>
           
           <h3 className="font-semibold mt-6 mb-3">Checklist</h3>
@@ -806,7 +923,7 @@ pm2 startup`}</Code>
     },
     {
       id: 7,
-      title: 'Connect Domain + HTTPS',
+      title: '🌐 Connect Domain + HTTPS',
       time: '~15 min',
       content: (
         <>
@@ -824,9 +941,9 @@ pm2 startup`}</Code>
           </Step>
           
           <Step title="2. Configure nginx">
-            <p className="mb-2">On your server, create the nginx config:</p>
+            <p className="mb-2"><strong>On the server</strong> (SSH in if you&apos;re not already connected), create the nginx config:</p>
             <Code>sudo nano /etc/nginx/sites-available/app</Code>
-            <p className="mt-4 mb-2">Paste this (already customized with your domain):</p>
+            <p className="mt-4 mb-2">Paste this config (already customized with your domain):</p>
             <Code>{`server {
     listen 80;
     server_name ${domain} www.${domain};
@@ -845,28 +962,34 @@ pm2 startup`}</Code>
 }`}</Code>
           </Step>
           
-          <Step title="3. Enable and install SSL">
-            <Code>{`sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl restart nginx
-
-# Install SSL certificate
-sudo apt install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d ${domain} -d www.${domain}
-
-# Enable firewall
-sudo ufw allow 22
-sudo ufw allow 80
-sudo ufw allow 443
-sudo ufw enable`}</Code>
-          </Step>
-          
-          <Step title="4. Point DNS to server">
-            <p>In your domain registrar, add A records:</p>
+          <Step title="3. Point DNS to your server">
+            <p className="mb-2">In your domain registrar (Namecheap, GoDaddy, Cloudflare, etc.), add these A records:</p>
             <div className="bg-background p-4 rounded-lg mt-2 font-mono text-sm">
               <div>Type: A &nbsp;&nbsp; Name: @ &nbsp;&nbsp;&nbsp;&nbsp; Value: {ip}</div>
               <div>Type: A &nbsp;&nbsp; Name: www &nbsp; Value: {ip}</div>
             </div>
+            <Warning>
+              <p className="text-sm"><strong>DNS takes time to propagate.</strong> Wait 5-30 minutes before the next step. You can check if it&apos;s ready at <a href={`https://dnschecker.org/#A/${domain}`} target="_blank" className="underline">dnschecker.org</a></p>
+            </Warning>
+          </Step>
+          
+          <Step title="4. Enable nginx and install SSL">
+            <p className="mb-2">After DNS is pointing to your server, run these commands <strong>on the server</strong>:</p>
+            <Code>{`# Enable your site config
+sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+
+# Install SSL certificate (this needs DNS to be working)
+sudo apt install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d ${domain} -d www.${domain}
+
+# Enable firewall (keeps port 22 open for SSH)
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw --force enable`}</Code>
+            <p className="text-sm text-muted-foreground mt-2">If certbot fails, wait longer for DNS and try again.</p>
           </Step>
           
           <Step title="5. Add production redirect URI to Google">
@@ -894,7 +1017,7 @@ sudo ufw enable`}</Code>
     },
     {
       id: 8,
-      title: 'Automatic Deployments',
+      title: '⚡ Automatic Deployments',
       time: '~5 min',
       content: (
         <>
@@ -920,32 +1043,52 @@ sudo ufw enable`}</Code>
           </Step>
           
           <Step title="2. Get your SSH private key">
-            <p>In Cursor&apos;s terminal (on your computer, not the server), run:</p>
-            <Code>cat ~/.ssh/id_ed25519</Code>
-            <p className="mt-2 text-sm">Copy the ENTIRE output including BEGIN and END lines.</p>
+            <p className="mb-2">Run this in Cursor&apos;s terminal (on your computer, not the server):</p>
+            <OneLiner label="Copy command">{`cat ~/.ssh/id_ed25519`}</OneLiner>
+            <p className="text-sm text-muted-foreground">Copy the ENTIRE output including the <code className="bg-muted px-1 rounded">-----BEGIN</code> and <code className="bg-muted px-1 rounded">-----END</code> lines.</p>
+            
+            <Explainer title="What is this for?">
+              This is the same SSH key you used to create the DigitalOcean droplet. GitHub Actions will use it to connect to your server and run deploy commands automatically.
+            </Explainer>
           </Step>
           
           <Step title="3. Add GitHub secrets">
+            <p className="mb-3">Add these three secrets:</p>
             <a 
-              href={`https://github.com/${gh}/${repo}/settings/secrets/actions`}
+              href={`https://github.com/${gh}/${repo}/settings/secrets/actions/new`}
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
             >
-              Open GitHub Secrets →
+              Add GitHub Secret →
             </a>
-            <div className="bg-background p-4 rounded-lg mt-4 font-mono text-sm space-y-2">
-              <div><strong>DO_HOST</strong> = {ip}</div>
-              <div><strong>DO_USER</strong> = root</div>
-              <div><strong>DO_SSH_KEY</strong> = (your private key)</div>
+            <div className="bg-muted/50 p-4 rounded-lg mt-4 space-y-3">
+              <div className="flex justify-between items-center">
+                <div><code className="font-bold">DO_HOST</code> = <span className="text-muted-foreground">{ip || 'your-droplet-ip'}</span></div>
+                <CopyButton text={ip || 'YOUR_IP'} label="Copy" />
+              </div>
+              <div className="flex justify-between items-center">
+                <div><code className="font-bold">DO_USER</code> = <span className="text-muted-foreground">root</span></div>
+                <CopyButton text="root" label="Copy" />
+              </div>
+              <div>
+                <code className="font-bold">DO_SSH_KEY</code> = <span className="text-muted-foreground">(paste your private key from step 2)</span>
+              </div>
             </div>
           </Step>
           
-          <Step title="4. Test auto-deploy!">
-            <Code>{`git add -A
-git commit -m "test auto-deploy"
-git push origin main`}</Code>
-            <p className="mt-2">Watch the Actions tab in GitHub!</p>
+          <Step title="4. Test auto-deploy! 🎉">
+            <p className="mb-2">In Cursor&apos;s terminal (on your computer), push any change to trigger deployment:</p>
+            <OneLiner label="Copy git commands">{`git add -A && git commit -m "test auto-deploy" && git push origin main`}</OneLiner>
+            <p className="mt-3">Watch it deploy:</p>
+            <a 
+              href={`https://github.com/${gh}/${repo}/actions`}
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-2 px-4 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm transition-colors"
+            >
+              📺 Watch GitHub Actions →
+            </a>
           </Step>
           
           <h3 className="font-semibold mt-6 mb-3">Checklist</h3>
@@ -997,7 +1140,7 @@ git push origin main`}</Code>
       </header>
       
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <h1 className="text-3xl font-bold mb-2">Deploy Your App</h1>
+        <h1 className="text-3xl font-bold mb-2">Deploy Your Enterprise-Ready App</h1>
         <p className="text-muted-foreground mb-4">
           Step-by-step guide to get your Cursor project live. No prior deployment experience needed.
         </p>
