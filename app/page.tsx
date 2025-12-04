@@ -100,18 +100,8 @@ export default async function Home() {
           {SITE.tagline}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          {session ? (
-            <>
-              {isAdmin && (
-                <Button size="lg" asChild>
-                  <Link href="/admin">Go to Admin →</Link>
-                </Button>
-              )}
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/api/auth/signout">Sign Out</Link>
-              </Button>
-            </>
-          ) : showLaunchWizard ? (
+          {showLaunchWizard ? (
+            // Local dev + unconfigured — always show Start Building
             <>
               <Button size="lg" asChild>
                 <Link href="/launch">Start Building →</Link>
@@ -129,8 +119,20 @@ export default async function Home() {
                 View on GitHub
               </a>
             </Button>
+          ) : session ? (
+            // Configured + logged in
+            <>
+              {isAdmin && (
+                <Button size="lg" asChild>
+                  <Link href="/admin">Go to Admin →</Link>
+                </Button>
+              )}
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/api/auth/signout">Sign Out</Link>
+              </Button>
+            </>
           ) : (
-            // Configured app - show sign in
+            // Configured + logged out - show sign in
             <>
               <Button size="lg" asChild>
                 <Link href="/auth/signin">Get Started →</Link>
