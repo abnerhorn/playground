@@ -9,7 +9,7 @@
 # Required GitHub Secrets (Settings → Secrets → Actions):
 #   - DO_HOST:    Your droplet IP address (e.g., 123.456.789.0)
 #   - DO_USER:    SSH username (usually 'root')
-#   - DO_SSH_KEY: Private SSH key (entire contents of ~/.ssh/id_rsa)
+#   - DO_SSH_KEY: Private SSH key (entire contents of ~/.ssh/id_ed25519)
 #
 # =============================================================================
 

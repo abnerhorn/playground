@@ -24,6 +24,14 @@ export const SITE = {
   description: 'Production-ready Next.js 15 starter with auth, admin dashboard, and deployment infrastructure.',
   
   // -----------------------------------------------------------------------------
+  // Deploy Guide (removable feature)
+  // -----------------------------------------------------------------------------
+  // The smart DeployBanner component in the root layout handles this now.
+  // It automatically hides once your app is deployed to production.
+  // Set to true only if you want a SECOND banner on the homepage.
+  showDeployBanner: false,
+  
+  // -----------------------------------------------------------------------------
   // Contact
   // -----------------------------------------------------------------------------
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || '',
@@ -32,7 +40,7 @@ export const SITE = {
   // URLs
   // -----------------------------------------------------------------------------
   url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-  github: 'https://github.com/hrosenblume/',
+  github: 'https://github.com/abnerhorn/playground',
   
   // -----------------------------------------------------------------------------
   // Footer Links
@@ -40,9 +48,9 @@ export const SITE = {
   // Shown in the homepage footer
   // type: 'email' will use the EmailLink component (obfuscated mailto)
   footerLinks: [
-    { label: 'GitHub', href: 'https://github.com/hrosenblume/' },
-    { label: 'Twitter', href: 'https://twitter.com/hrosenblume' },
-    { label: 'Email', type: 'email' },
+    { label: 'GitHub', href: 'https://github.com/abnerhorn/playground' },
+    // { label: 'Twitter', href: 'https://twitter.com/yourhandle' },
+    // { label: 'Email', type: 'email' },
   ] as FooterLink[],
   
   // -----------------------------------------------------------------------------
@@ -82,4 +90,3 @@ export const SITE = {
     },
   ],
 }
-
