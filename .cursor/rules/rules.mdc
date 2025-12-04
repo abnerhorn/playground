@@ -76,20 +76,28 @@ globs: ["**/*"]
 
 ## Git Workflow
 
-### When user types "d" (dev commit)
+**Trigger rules:**
+- `d`, `g`, or `p` typed **alone** (single character message) → Execute immediately
+- Mentioned in a sentence → Do NOT execute, just discuss
+
+### "d" — Dev commit
+1. If not on `dev`: create/switch to `dev` branch
+2. `git add -A && git status -sb && git diff --staged --stat`
+3. Review changes with user
+4. Commit with descriptive message
+5. Push to `dev` branch (set upstream if needed: `git push -u origin dev`)
+
+### "g" — Production commit
 1. `git add -A && git status -sb && git diff --staged --stat`
-2. Review changes
+2. Review changes with user
 3. Commit with descriptive message
-4. Push to `dev` branch
+4. If on `dev`: merge to `main`, push `main`, return to `dev`
+5. If on `main`: push `main`, stay on `main`
 
-### When user types "g" (production commit)
-**Only run when explicitly requested.**
-1. If on dev: merge to main first
-2. `git add -A`, commit, push to main
-3. Return to dev branch
-
-### When user types "p" (pull)
-`git stash && git pull && git stash pop`
+### "p" — Pull with stash
+1. Stash only if there are uncommitted changes
+2. `git pull --rebase`
+3. Pop stash only if one was created
 
 ## Planning Files
 
