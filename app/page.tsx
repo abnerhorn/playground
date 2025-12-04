@@ -39,9 +39,17 @@ const featureIcons: Record<string, React.ReactNode> = {
   smartphone: <SmartphoneIcon />,
 }
 
+// Template default name — used to detect if running locally unconfigured
+const TEMPLATE_DEFAULT_NAME = 'Next.js Cursor Template'
+
 export default async function Home() {
   const session = await auth()
   const isAdmin = session?.user?.role === 'admin'
+  
+  // Show "Start Building" only when running locally with unconfigured template
+  const isLocalDev = process.env.NODE_ENV === 'development'
+  const isUnconfigured = SITE.name === TEMPLATE_DEFAULT_NAME
+  const showLaunchWizard = isLocalDev && isUnconfigured
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
@@ -103,7 +111,26 @@ export default async function Home() {
                 <Link href="/api/auth/signout">Sign Out</Link>
               </Button>
             </>
+          ) : showLaunchWizard ? (
+            <>
+              <Button size="lg" asChild>
+                <Link href="/launch">Start Building →</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <a href={SITE.github} target="_blank" rel="noopener noreferrer">
+                  View on GitHub
+                </a>
+              </Button>
+            </>
+          ) : isUnconfigured ? (
+            // Production demo - just show GitHub link
+            <Button size="lg" asChild>
+              <a href={SITE.github} target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+            </Button>
           ) : (
+            // Configured app - show sign in
             <>
               <Button size="lg" asChild>
                 <Link href="/auth/signin">Get Started →</Link>

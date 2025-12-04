@@ -1193,9 +1193,12 @@ git push origin main`}</Code>
 git commit -m "your changes"
 git push origin main`}</Code>
             
-            <div className="mt-8 flex gap-4">
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link href="/launch">
+                <Button size="lg">Launch Your App →</Button>
+              </Link>
               <Link href="/">
-                <Button size="lg">Back to App →</Button>
+                <Button size="lg" variant="outline">Back to Home</Button>
               </Link>
               {prodDomain && (
                 <a href={`https://${prodDomain}`} target="_blank" rel="noopener noreferrer">
