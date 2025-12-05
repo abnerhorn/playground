@@ -1,0 +1,615 @@
+# Ordo Design System - Customer-Facing Website
+
+This document defines the design tokens extracted from the Figma design for Ordo's customer-facing website. These tokens form the foundation of our design system and should be used consistently across all frontend components.
+
+---
+
+## Breakpoints
+
+| Token Name | Value | Description |
+|------------|-------|-------------|
+| `--breakpoint-mobile` | `393px` | Mobile viewport (Figma mobile frame) |
+| `--breakpoint-tablet` | `768px` | Tablet/small desktop |
+| `--breakpoint-desktop` | `1280px` | Desktop (Figma desktop frame) |
+| `--breakpoint-wide` | `1440px` | Wide desktop |
+
+```css
+/* Media query reference */
+@media (max-width: 767px) { /* Mobile */ }
+@media (min-width: 768px) and (max-width: 1279px) { /* Tablet */ }
+@media (min-width: 1280px) { /* Desktop */ }
+```
+
+---
+
+## Color Tokens
+
+### UX Primary (Blue Scale)
+
+The primary blue palette used for CTAs, links, and interactive elements.
+
+| Token Name | Value | Step | Usage |
+|------------|-------|------|-------|
+| `--color-primary-100` | `#C9E4F9` | Lightest | Subtle backgrounds, hover states |
+| `--color-primary-200` | `#7BB8D9` | Light | Secondary buttons, borders |
+| `--color-primary-300` | `#0099D6` | Base | Primary CTAs, links |
+| `--color-primary-400` | `#0077B3` | Dark | Hover states, active elements |
+| `--color-primary-500` | `#1A5276` | Darkest | Text on light primary backgrounds |
+
+### Neutrals
+
+| Token Name | Value | Step | Usage |
+|------------|-------|------|-------|
+| `--color-neutral-100` | `#F0F0F0` | Lightest | Page backgrounds, subtle dividers |
+| `--color-neutral-200` | `#D0D0D0` | Light | Borders, disabled states |
+| `--color-neutral-300` | `#A0A0A0` | Medium | Placeholder text, icons |
+| `--color-neutral-400` | `#606060` | Dark | Secondary text |
+| `--color-neutral-500` | `#000000` | Darkest | Primary text, headings |
+
+### Semantic Colors
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--color-white` | `#FFFFFF` | Card backgrounds, overlays |
+| `--color-black` | `#000000` | Primary text |
+| `--color-text-primary` | `#000000` | Main body text |
+| `--color-text-secondary` | `#606060` | Secondary/muted text |
+| `--color-text-on-dark` | `#FFFFFF` | Text on dark backgrounds |
+| `--color-divider` | `#D0D0D0` | Borders, dividers |
+
+---
+
+## UX Accent Palette
+
+### Pink / Magenta Scale
+
+| Token Name | Value | Step | Usage |
+|------------|-------|------|-------|
+| `--color-pink-100` | `#F5E6F0` | Lightest | Soft backgrounds |
+| `--color-pink-200` | `#E8B4D0` | Light | Highlights |
+| `--color-pink-300` | `#D46F9B` | Base | Accent elements |
+| `--color-pink-400` | `#A34470` | Dark | Hover states |
+| `--color-pink-500` | `#6B2D4A` | Darkest | Text on pink backgrounds |
+
+### Yellow / Orange Scale
+
+| Token Name | Value | Step | Usage |
+|------------|-------|------|-------|
+| `--color-yellow-100` | `#F7EED8` | Lightest | Soft backgrounds |
+| `--color-yellow-200` | `#F5D99A` | Light | Highlights |
+| `--color-yellow-300` | `#F5C24A` | Base | Accent elements, warnings |
+| `--color-yellow-400` | `#F5A623` | Dark | Orange accents |
+| `--color-yellow-500` | `#8B5A2B` | Darkest | Text on yellow backgrounds |
+
+### Green Scale
+
+| Token Name | Value | Step | Usage |
+|------------|-------|------|-------|
+| `--color-green-100` | `#DDF2E4` | Lightest | Success backgrounds |
+| `--color-green-200` | `#8DCAA0` | Light | Highlights |
+| `--color-green-300` | `#5DB57A` | Base | Success states, accents |
+| `--color-green-400` | `#2E9E4E` | Dark | Hover states |
+| `--color-green-500` | `#1D6B35` | Darkest | Text on green backgrounds |
+
+---
+
+## Typography
+
+### Font Families
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--font-family-heading` | `"Noto Serif", Georgia, serif` | Headings (H1, H2) |
+| `--font-family-body` | `"Outfit", system-ui, sans-serif` | Body text, UI elements |
+
+### Font Weights
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--font-weight-regular` | `400` | Body text |
+| `--font-weight-medium` | `500` | Emphasis, nav items |
+| `--font-weight-semibold` | `600` | Subheadings, buttons |
+| `--font-weight-bold` | `700` | Headings |
+
+### Font Sizes - Desktop
+
+| Token Name | Value | Rem |
+|------------|-------|-----|
+| `--font-size-xs` | `14px` | `0.875rem` |
+| `--font-size-sm` | `16px` | `1rem` |
+| `--font-size-md` | `18px` | `1.125rem` |
+| `--font-size-lg` | `20px` | `1.25rem` |
+| `--font-size-xl` | `32px` | `2rem` |
+| `--font-size-2xl` | `48px` | `3rem` |
+| `--font-size-3xl` | `64px` | `4rem` |
+
+### Font Sizes - Mobile
+
+| Token Name | Desktop | Mobile | Scale |
+|------------|---------|--------|-------|
+| `--font-size-xs` | `14px` | `14px` | 1:1 |
+| `--font-size-sm` | `16px` | `16px` | 1:1 |
+| `--font-size-md` | `18px` | `16px` | 0.89x |
+| `--font-size-lg` | `20px` | `18px` | 0.9x |
+| `--font-size-xl` | `32px` | `25px` | 0.78x |
+| `--font-size-2xl` | `48px` | `33px` | 0.69x |
+| `--font-size-3xl` | `64px` | `36px` | 0.56x |
+
+### Line Heights
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--line-height-tight` | `1.1` | Large headings |
+| `--line-height-snug` | `1.33` | Subheadings |
+| `--line-height-normal` | `1.5` | Body text |
+| `--line-height-relaxed` | `1.625` | Long-form content |
+
+### Letter Spacing
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--letter-spacing-tight` | `-0.02em` | Large headings (H1, H2) |
+| `--letter-spacing-normal` | `0.009em` | Body text |
+| `--letter-spacing-wide` | `0.03em` | Small caps, labels |
+
+### Typography Presets - Responsive
+
+```css
+/* Heading 1 - Hero titles */
+.heading-1 {
+  font-family: var(--font-family-heading);
+  font-size: 36px;                        /* Mobile: 36px */
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+@media (min-width: 768px) {
+  .heading-1 {
+    font-size: 48px;                      /* Tablet: 48px */
+  }
+}
+@media (min-width: 1280px) {
+  .heading-1 {
+    font-size: 64px;                      /* Desktop: 64px */
+  }
+}
+
+/* Heading 2 - Section titles */
+.heading-2 {
+  font-family: var(--font-family-heading);
+  font-size: 28px;                        /* Mobile: 28px */
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+@media (min-width: 768px) {
+  .heading-2 {
+    font-size: 36px;                      /* Tablet: 36px */
+  }
+}
+@media (min-width: 1280px) {
+  .heading-2 {
+    font-size: 48px;                      /* Desktop: 48px */
+  }
+}
+
+/* Heading 3 - Card titles, subsections */
+.heading-3 {
+  font-family: var(--font-family-body);
+  font-size: 20px;                        /* Mobile: 20px */
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.33;
+  letter-spacing: 0;
+}
+@media (min-width: 1280px) {
+  .heading-3 {
+    font-size: 32px;                      /* Desktop: 32px */
+  }
+}
+
+/* Body Large - Feature descriptions */
+.body-lg {
+  font-family: var(--font-family-body);
+  font-size: 16px;                        /* Mobile: 16px */
+  font-weight: var(--font-weight-medium);
+  line-height: 1.6;
+  letter-spacing: 0.009em;
+}
+@media (min-width: 1280px) {
+  .body-lg {
+    font-size: 20px;                      /* Desktop: 20px */
+  }
+}
+
+/* Body - Default text */
+.body {
+  font-family: var(--font-family-body);
+  font-size: 16px;                        /* Same on all sizes */
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+  letter-spacing: 0.009em;
+}
+
+/* Body Small - Captions, labels */
+.body-sm {
+  font-family: var(--font-family-body);
+  font-size: 14px;                        /* Same on all sizes */
+  font-weight: var(--font-weight-regular);
+  line-height: 1.45;
+  letter-spacing: 0.03em;
+}
+```
+
+---
+
+## Spacing
+
+### Base Spacing Scale
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--space-xs` | `8px` | Tight spacing, icon gaps |
+| `--space-sm` | `10px` | Small internal padding |
+| `--space-md` | `16px` | Button padding, card gaps |
+| `--space-lg` | `24px` | Section padding, card padding |
+| `--space-xl` | `40px` | Section gaps |
+| `--space-2xl` | `56px` | Section top padding (mobile) |
+| `--space-3xl` | `72px` | Large section margins |
+
+### Layout - Desktop
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--container-max-width` | `1280px` | Main content container |
+| `--container-padding` | `320px` | Side margin (from viewport edge to content) |
+| `--content-width` | `1280px` | Actual content width |
+
+### Layout - Mobile
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--container-padding-mobile` | `24px` | Side padding on mobile |
+| `--content-width-mobile` | `345px` | Content width (393px - 48px) |
+| `--nav-height-mobile` | `70px` | Mobile navigation height |
+
+### Responsive Layout Reference
+
+| Property | Mobile (393px) | Tablet (768px) | Desktop (1280px+) |
+|----------|----------------|----------------|-------------------|
+| Container padding | 24px | 40px | 320px (centered) |
+| Content width | 345px | 688px | 1280px |
+| Nav height | 70px | 80px | 86px |
+| Section top padding | 56px | 80px | 120px |
+| Button stacking | Vertical | Horizontal | Horizontal |
+
+---
+
+## Borders & Strokes
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--border-width-thin` | `1px` | Default borders, dividers |
+| `--border-width-medium` | `2px` | Emphasized borders, focus rings |
+| `--border-radius-sm` | `4px` | Buttons, small elements |
+| `--border-radius-md` | `8px` | Cards, inputs |
+| `--border-radius-lg` | `16px` | Large cards, images |
+| `--border-radius-full` | `9999px` | Pills, avatars |
+
+---
+
+## Shadows
+
+| Token Name | Value | Usage |
+|------------|-------|-------|
+| `--shadow-sm` | `0 1px 2px rgba(0, 0, 0, 0.05)` | Subtle elevation |
+| `--shadow-md` | `0 4px 6px rgba(0, 0, 0, 0.1)` | Cards, dropdowns |
+| `--shadow-lg` | `0 10px 15px rgba(0, 0, 0, 0.1)` | Modals, popovers |
+
+---
+
+## Components Reference
+
+### Navigation
+
+#### Desktop
+- Height: 86px
+- Logo + horizontal menu links + CTA buttons
+- Font: Outfit, 16px, Regular
+- Link spacing: 40px between items
+
+#### Mobile
+- Height: 70px
+- Logo + hamburger menu icon (24x24px)
+- Menu icon positioned at right edge with 16px margin
+- Logo positioned with 16px left margin
+
+### Buttons
+
+#### Primary Button
+- Background: `--color-primary-300` (#0099D6)
+- Hover: `--color-primary-400` (#0077B3)
+- Text: `--color-white` (#FFFFFF)
+- Font: Outfit, 16px, SemiBold
+- Border-radius: 8px
+
+| Property | Desktop | Mobile |
+|----------|---------|--------|
+| Height | 59px | 44px |
+| Padding | 16px 24px | 12px 16px |
+| Width | Auto | Full-width (345px) |
+| Layout | Side-by-side | Stacked vertically |
+
+#### Secondary Button (Outlined)
+- Background: transparent
+- Border: 1px solid `--color-divider`
+- Text: `--color-text-primary`
+- Hover: `--color-neutral-100` background
+- Same sizing as Primary Button
+
+### Cards
+
+#### Desktop
+- Background: `--color-white`
+- Border: 1px solid `--color-divider`
+- Border-radius: 16px
+- Padding: 32px
+- Shadow: `--shadow-md`
+- Grid: 2 columns
+
+#### Mobile
+- Same styling as desktop
+- Padding: 24px
+- Full-width (345px)
+- Single column layout
+
+### Feature List Items
+
+#### Desktop
+- Height: ~167px
+- Horizontal layout: Icon (104px) + Text content
+- 2-column grid
+
+#### Mobile
+- Height: ~110px
+- Horizontal layout: Icon (72px) + Text content
+- Single column, full-width
+
+### Tiles / Stats
+
+#### Desktop
+- Horizontal row of tiles
+- Icon + text centered
+- ~216px height
+
+#### Mobile
+- Vertical stack
+- 118px height per tile
+- Full-width
+- Icon (56px) centered above text
+
+---
+
+## CSS Variables Template
+
+```css
+:root {
+  /* Breakpoints (for reference - use in media queries) */
+  --breakpoint-mobile: 393px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1280px;
+  
+  /* Primary Blue Scale */
+  --color-primary-100: #C9E4F9;
+  --color-primary-200: #7BB8D9;
+  --color-primary-300: #0099D6;
+  --color-primary-400: #0077B3;
+  --color-primary-500: #1A5276;
+  
+  /* Neutrals */
+  --color-neutral-100: #F0F0F0;
+  --color-neutral-200: #D0D0D0;
+  --color-neutral-300: #A0A0A0;
+  --color-neutral-400: #606060;
+  --color-neutral-500: #000000;
+  
+  /* Semantic Colors */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-text-primary: #000000;
+  --color-text-secondary: #606060;
+  --color-text-on-dark: #FFFFFF;
+  --color-divider: #D0D0D0;
+  
+  /* Pink Scale */
+  --color-pink-100: #F5E6F0;
+  --color-pink-200: #E8B4D0;
+  --color-pink-300: #D46F9B;
+  --color-pink-400: #A34470;
+  --color-pink-500: #6B2D4A;
+  
+  /* Yellow/Orange Scale */
+  --color-yellow-100: #F7EED8;
+  --color-yellow-200: #F5D99A;
+  --color-yellow-300: #F5C24A;
+  --color-yellow-400: #F5A623;
+  --color-yellow-500: #8B5A2B;
+  
+  /* Green Scale */
+  --color-green-100: #DDF2E4;
+  --color-green-200: #8DCAA0;
+  --color-green-300: #5DB57A;
+  --color-green-400: #2E9E4E;
+  --color-green-500: #1D6B35;
+  
+  /* Typography */
+  --font-family-heading: "Noto Serif", Georgia, serif;
+  --font-family-body: "Outfit", system-ui, sans-serif;
+  
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Font Sizes - Mobile First */
+  --font-size-xs: 0.875rem;   /* 14px */
+  --font-size-sm: 1rem;       /* 16px */
+  --font-size-md: 1rem;       /* 16px mobile, 18px desktop */
+  --font-size-lg: 1.125rem;   /* 18px mobile, 20px desktop */
+  --font-size-xl: 1.5625rem;  /* 25px mobile, 32px desktop */
+  --font-size-2xl: 2.0625rem; /* 33px mobile, 48px desktop */
+  --font-size-3xl: 2.25rem;   /* 36px mobile, 64px desktop */
+  
+  /* Spacing */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 0.625rem;  /* 10px */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2.5rem;    /* 40px */
+  --space-2xl: 3.5rem;   /* 56px */
+  --space-3xl: 4.5rem;   /* 72px */
+  
+  /* Layout - Mobile */
+  --container-padding: 1.5rem;  /* 24px */
+  --nav-height: 70px;
+  
+  /* Borders */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-radius-sm: 0.25rem;  /* 4px */
+  --border-radius-md: 0.5rem;   /* 8px */
+  --border-radius-lg: 1rem;     /* 16px */
+  --border-radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Component Sizes - Mobile */
+  --button-height: 44px;
+  --button-padding-x: 1rem;
+  --button-padding-y: 0.75rem;
+}
+
+/* Tablet overrides */
+@media (min-width: 768px) {
+  :root {
+    --container-padding: 2.5rem;  /* 40px */
+    --nav-height: 80px;
+    --button-height: 52px;
+  }
+}
+
+/* Desktop overrides */
+@media (min-width: 1280px) {
+  :root {
+    --font-size-md: 1.125rem;   /* 18px */
+    --font-size-lg: 1.25rem;    /* 20px */
+    --font-size-xl: 2rem;       /* 32px */
+    --font-size-2xl: 3rem;      /* 48px */
+    --font-size-3xl: 4rem;      /* 64px */
+    
+    --nav-height: 86px;
+    --button-height: 59px;
+    --button-padding-x: 1.5rem;
+    --button-padding-y: 1rem;
+  }
+}
+```
+
+---
+
+## Tailwind CSS Configuration
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          100: '#C9E4F9',
+          200: '#7BB8D9',
+          300: '#0099D6',
+          400: '#0077B3',
+          500: '#1A5276',
+        },
+        neutral: {
+          100: '#F0F0F0',
+          200: '#D0D0D0',
+          300: '#A0A0A0',
+          400: '#606060',
+          500: '#000000',
+        },
+        pink: {
+          100: '#F5E6F0',
+          200: '#E8B4D0',
+          300: '#D46F9B',
+          400: '#A34470',
+          500: '#6B2D4A',
+        },
+        yellow: {
+          100: '#F7EED8',
+          200: '#F5D99A',
+          300: '#F5C24A',
+          400: '#F5A623',
+          500: '#8B5A2B',
+        },
+        green: {
+          100: '#DDF2E4',
+          200: '#8DCAA0',
+          300: '#5DB57A',
+          400: '#2E9E4E',
+          500: '#1D6B35',
+        },
+      },
+      fontFamily: {
+        heading: ['"Noto Serif"', 'Georgia', 'serif'],
+        body: ['Outfit', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        // Mobile-first sizes (use md: and lg: prefixes for larger)
+        'h1': ['2.25rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],  // 36px
+        'h1-md': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],  // 48px
+        'h1-lg': ['4rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],  // 64px
+        'h2': ['1.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],  // 28px
+        'h2-md': ['2.25rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }], // 36px
+        'h2-lg': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],  // 48px
+      },
+      screens: {
+        'mobile': '393px',
+        'tablet': '768px',
+        'desktop': '1280px',
+        'wide': '1440px',
+      },
+    },
+  },
+}
+```
+
+---
+
+## Figma Source
+
+- **Design File**: [Website 4.0](https://www.figma.com/design/I6ut1BYbe41mZCaEF9IDAe/Website-4.0?node-id=2278-332)
+- **Desktop Frame**: [Node 2278:332](https://www.figma.com/design/I6ut1BYbe41mZCaEF9IDAe/Website-4.0?node-id=2278-332) (1920x10030px)
+- **Mobile Frame**: [Node 2278:1440](https://www.figma.com/design/I6ut1BYbe41mZCaEF9IDAe/Website-4.0?node-id=2278-1440) (393x8486px)
+- **Color Palette**: [Node 2202:5311](https://www.figma.com/design/I6ut1BYbe41mZCaEF9IDAe/Website-4.0?node-id=2202-5311)
+
+---
+
+## Usage Guidelines
+
+1. **Mobile-first approach** - Start with mobile styles, then add breakpoint overrides for tablet and desktop.
+
+2. **Use CSS custom properties** - Font sizes scale automatically when using the CSS variables with media query overrides.
+
+3. **Button layouts** - On mobile, buttons stack vertically and span full width. On desktop, they sit side-by-side.
+
+4. **Typography scaling** - H1 scales from 36px (mobile) → 48px (tablet) → 64px (desktop). H2 scales from 28px → 36px → 48px.
+
+5. **Container padding** - Mobile uses 24px side padding, tablet uses 40px, desktop centers content with 320px margins.
+
+6. **Navigation** - Mobile shows logo + hamburger menu. Desktop shows full horizontal nav with all links visible.
+
+7. **Grid layouts** - Features and cards use single column on mobile, 2-column on desktop.

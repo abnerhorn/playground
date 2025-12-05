@@ -1,0 +1,623 @@
+/**
+ * Ordo Design System
+ * ==================
+ * 
+ * Design tokens for the customer-facing website.
+ * Extracted from Figma: https://www.figma.com/design/I6ut1BYbe41mZCaEF9IDAe/Website-4.0
+ * 
+ * Usage:
+ * - Import this file in layout.tsx for customer-facing pages
+ * - Use CSS variables directly or via Tailwind classes
+ * - Mobile-first approach with breakpoint overrides
+ */
+
+@layer base {
+  :root {
+    /* ==========================================
+       ORDO COLOR SYSTEM
+       ========================================== */
+    
+    /* Primary Blue Scale */
+    --ordo-primary-100: #C9E4F9;
+    --ordo-primary-200: #7BB8D9;
+    --ordo-primary-300: #0099D6;
+    --ordo-primary-400: #0077B3;
+    --ordo-primary-500: #1A5276;
+    
+    /* Neutrals */
+    --ordo-neutral-100: #F0F0F0;
+    --ordo-neutral-200: #D0D0D0;
+    --ordo-neutral-300: #A0A0A0;
+    --ordo-neutral-400: #606060;
+    --ordo-neutral-500: #000000;
+    
+    /* Semantic */
+    --ordo-white: #FFFFFF;
+    --ordo-black: #000000;
+    --ordo-text-primary: #000000;
+    --ordo-text-secondary: #606060;
+    --ordo-text-on-dark: #FFFFFF;
+    --ordo-divider: #D0D0D0;
+    --ordo-background: #FFFFFF;
+    --ordo-surface: #FAFBFC;
+    
+    /* Pink Accent Scale */
+    --ordo-pink-100: #F5E6F0;
+    --ordo-pink-200: #E8B4D0;
+    --ordo-pink-300: #D46F9B;
+    --ordo-pink-400: #A34470;
+    --ordo-pink-500: #6B2D4A;
+    
+    /* Yellow/Orange Accent Scale */
+    --ordo-yellow-100: #F7EED8;
+    --ordo-yellow-200: #F5D99A;
+    --ordo-yellow-300: #F5C24A;
+    --ordo-yellow-400: #F5A623;
+    --ordo-yellow-500: #8B5A2B;
+    
+    /* Green Accent Scale */
+    --ordo-green-100: #DDF2E4;
+    --ordo-green-200: #8DCAA0;
+    --ordo-green-300: #5DB57A;
+    --ordo-green-400: #2E9E4E;
+    --ordo-green-500: #1D6B35;
+    
+    /* ==========================================
+       TYPOGRAPHY
+       ========================================== */
+    
+    /* Font Families */
+    --ordo-font-heading: var(--font-noto-serif), 'Noto Serif', Georgia, serif;
+    --ordo-font-body: var(--font-outfit), 'Outfit', system-ui, sans-serif;
+    
+    /* Font Weights */
+    --ordo-font-regular: 400;
+    --ordo-font-medium: 500;
+    --ordo-font-semibold: 600;
+    --ordo-font-bold: 700;
+    
+    /* Mobile-first Font Sizes (scale up at breakpoints) */
+    --ordo-text-xs: 0.875rem;    /* 14px - always */
+    --ordo-text-sm: 1rem;        /* 16px - always */
+    --ordo-text-md: 1rem;        /* 16px mobile → 18px desktop */
+    --ordo-text-lg: 1.125rem;    /* 18px mobile → 20px desktop */
+    --ordo-text-xl: 1.5625rem;   /* 25px mobile → 32px desktop */
+    --ordo-text-2xl: 1.75rem;    /* 28px mobile → 48px desktop */
+    --ordo-text-3xl: 2.25rem;    /* 36px mobile → 64px desktop */
+    
+    /* Line Heights */
+    --ordo-leading-tight: 1.1;
+    --ordo-leading-snug: 1.33;
+    --ordo-leading-normal: 1.5;
+    --ordo-leading-relaxed: 1.625;
+    
+    /* Letter Spacing */
+    --ordo-tracking-tight: -0.02em;
+    --ordo-tracking-normal: 0.009em;
+    --ordo-tracking-wide: 0.03em;
+    
+    /* ==========================================
+       SPACING
+       ========================================== */
+    
+    --ordo-space-xs: 0.5rem;     /* 8px */
+    --ordo-space-sm: 0.625rem;   /* 10px */
+    --ordo-space-md: 1rem;       /* 16px */
+    --ordo-space-lg: 1.5rem;     /* 24px */
+    --ordo-space-xl: 2.5rem;     /* 40px */
+    --ordo-space-2xl: 3.5rem;    /* 56px */
+    --ordo-space-3xl: 4.5rem;    /* 72px */
+    
+    /* ==========================================
+       LAYOUT (Mobile-first)
+       ========================================== */
+    
+    --ordo-container-padding: 1.5rem;     /* 24px */
+    --ordo-nav-height: 70px;
+    --ordo-section-padding: 3.5rem;       /* 56px */
+    
+    /* ==========================================
+       BORDERS & RADIUS
+       ========================================== */
+    
+    --ordo-border-thin: 1px;
+    --ordo-border-medium: 2px;
+    --ordo-radius-sm: 0.25rem;   /* 4px */
+    --ordo-radius-md: 0.5rem;    /* 8px */
+    --ordo-radius-lg: 1rem;      /* 16px */
+    --ordo-radius-xl: 1.5rem;    /* 24px */
+    --ordo-radius-full: 9999px;
+    
+    /* ==========================================
+       SHADOWS
+       ========================================== */
+    
+    --ordo-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --ordo-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --ordo-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --ordo-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+    
+    /* ==========================================
+       COMPONENT TOKENS (Mobile-first)
+       ========================================== */
+    
+    /* Buttons */
+    --ordo-btn-height: 44px;
+    --ordo-btn-padding-x: 1rem;
+    --ordo-btn-padding-y: 0.75rem;
+    --ordo-btn-radius: var(--ordo-radius-md);
+    --ordo-btn-font-size: 1rem;
+    --ordo-btn-font-weight: var(--ordo-font-semibold);
+    
+    /* Cards */
+    --ordo-card-padding: 1.5rem;
+    --ordo-card-radius: var(--ordo-radius-lg);
+    
+    /* Inputs */
+    --ordo-input-height: 44px;
+    --ordo-input-padding-x: 1rem;
+    --ordo-input-radius: var(--ordo-radius-md);
+  }
+  
+  /* ==========================================
+     TABLET BREAKPOINT (768px+)
+     ========================================== */
+  @media (min-width: 768px) {
+    :root {
+      --ordo-container-padding: 2.5rem;   /* 40px */
+      --ordo-nav-height: 80px;
+      --ordo-section-padding: 5rem;       /* 80px */
+      
+      /* Typography scales up */
+      --ordo-text-md: 1.125rem;           /* 18px */
+      --ordo-text-lg: 1.25rem;            /* 20px */
+      --ordo-text-xl: 1.75rem;            /* 28px */
+      --ordo-text-2xl: 2.25rem;           /* 36px */
+      --ordo-text-3xl: 3rem;              /* 48px */
+      
+      /* Buttons */
+      --ordo-btn-height: 52px;
+    }
+  }
+  
+  /* ==========================================
+     DESKTOP BREAKPOINT (1280px+)
+     ========================================== */
+  @media (min-width: 1280px) {
+    :root {
+      --ordo-nav-height: 86px;
+      --ordo-section-padding: 7.5rem;     /* 120px */
+      
+      /* Typography at full desktop size */
+      --ordo-text-xl: 2rem;               /* 32px */
+      --ordo-text-2xl: 3rem;              /* 48px */
+      --ordo-text-3xl: 4rem;              /* 64px */
+      
+      /* Buttons */
+      --ordo-btn-height: 59px;
+      --ordo-btn-padding-x: 1.5rem;
+      --ordo-btn-padding-y: 1rem;
+    }
+  }
+}
+
+/* ==========================================
+   TYPOGRAPHY UTILITY CLASSES
+   ========================================== */
+
+@layer components {
+  /* Heading 1 - Hero titles */
+  .ordo-h1 {
+    font-family: var(--ordo-font-heading);
+    font-size: var(--ordo-text-3xl);
+    font-weight: var(--ordo-font-bold);
+    line-height: var(--ordo-leading-tight);
+    letter-spacing: var(--ordo-tracking-tight);
+    color: var(--ordo-primary-500);
+  }
+  
+  /* Heading 2 - Section titles */
+  .ordo-h2 {
+    font-family: var(--ordo-font-heading);
+    font-size: var(--ordo-text-2xl);
+    font-weight: var(--ordo-font-bold);
+    line-height: var(--ordo-leading-tight);
+    letter-spacing: var(--ordo-tracking-tight);
+    color: var(--ordo-primary-500);
+  }
+  
+  /* Heading 3 - Card titles */
+  .ordo-h3 {
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-text-xl);
+    font-weight: var(--ordo-font-semibold);
+    line-height: var(--ordo-leading-snug);
+    color: var(--ordo-text-primary);
+  }
+  
+  /* Body Large */
+  .ordo-body-lg {
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-text-lg);
+    font-weight: var(--ordo-font-medium);
+    line-height: var(--ordo-leading-relaxed);
+    letter-spacing: var(--ordo-tracking-normal);
+    color: var(--ordo-text-primary);
+  }
+  
+  /* Body */
+  .ordo-body {
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-text-sm);
+    font-weight: var(--ordo-font-regular);
+    line-height: var(--ordo-leading-normal);
+    letter-spacing: var(--ordo-tracking-normal);
+    color: var(--ordo-text-primary);
+  }
+  
+  /* Body Small */
+  .ordo-body-sm {
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-text-xs);
+    font-weight: var(--ordo-font-regular);
+    line-height: var(--ordo-leading-normal);
+    letter-spacing: var(--ordo-tracking-wide);
+    color: var(--ordo-text-secondary);
+  }
+  
+  /* Label */
+  .ordo-label {
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-text-xs);
+    font-weight: var(--ordo-font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--ordo-tracking-wide);
+    color: var(--ordo-text-secondary);
+  }
+}
+
+/* ==========================================
+   BUTTON UTILITY CLASSES
+   ========================================== */
+
+@layer components {
+  /* Base button styles */
+  .ordo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: var(--ordo-btn-height);
+    padding: var(--ordo-btn-padding-y) var(--ordo-btn-padding-x);
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-btn-font-size);
+    font-weight: var(--ordo-btn-font-weight);
+    line-height: 1;
+    border-radius: var(--ordo-btn-radius);
+    transition: all 150ms ease-out;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  .ordo-btn:focus-visible {
+    outline: 2px solid var(--ordo-primary-300);
+    outline-offset: 2px;
+  }
+  
+  .ordo-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* Primary button */
+  .ordo-btn-primary {
+    background-color: var(--ordo-primary-300);
+    color: var(--ordo-white);
+    border: none;
+  }
+  
+  .ordo-btn-primary:hover:not(:disabled) {
+    background-color: var(--ordo-primary-400);
+  }
+  
+  .ordo-btn-primary:active:not(:disabled) {
+    background-color: var(--ordo-primary-500);
+    transform: scale(0.98);
+  }
+  
+  /* Secondary button */
+  .ordo-btn-secondary {
+    background-color: transparent;
+    color: var(--ordo-text-primary);
+    border: var(--ordo-border-thin) solid var(--ordo-divider);
+  }
+  
+  .ordo-btn-secondary:hover:not(:disabled) {
+    background-color: var(--ordo-neutral-100);
+  }
+  
+  .ordo-btn-secondary:active:not(:disabled) {
+    background-color: var(--ordo-neutral-200);
+    transform: scale(0.98);
+  }
+  
+  /* Text button with arrow */
+  .ordo-btn-text {
+    background-color: transparent;
+    color: var(--ordo-text-primary);
+    border: none;
+    padding: 0.5rem 0;
+    height: auto;
+  }
+  
+  .ordo-btn-text:hover:not(:disabled) {
+    color: var(--ordo-primary-300);
+  }
+  
+  /* Link style button */
+  .ordo-btn-link {
+    background-color: transparent;
+    color: var(--ordo-primary-300);
+    border: none;
+    padding: 0;
+    height: auto;
+    font-weight: var(--ordo-font-medium);
+  }
+  
+  .ordo-btn-link:hover:not(:disabled) {
+    color: var(--ordo-primary-400);
+    text-decoration: underline;
+  }
+  
+  /* Full width modifier */
+  .ordo-btn-full {
+    width: 100%;
+  }
+}
+
+/* ==========================================
+   CONTAINER CLASSES
+   ========================================== */
+
+@layer components {
+  /* Main container - centers content */
+  .ordo-container {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--ordo-container-padding);
+    padding-right: var(--ordo-container-padding);
+  }
+  
+  /* Section padding */
+  .ordo-section {
+    padding-top: var(--ordo-section-padding);
+    padding-bottom: var(--ordo-section-padding);
+  }
+  
+  /* Narrow container for text-heavy content */
+  .ordo-container-narrow {
+    width: 100%;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--ordo-container-padding);
+    padding-right: var(--ordo-container-padding);
+  }
+}
+
+/* ==========================================
+   CARD CLASSES
+   ========================================== */
+
+@layer components {
+  .ordo-card {
+    background-color: var(--ordo-white);
+    border: var(--ordo-border-thin) solid var(--ordo-divider);
+    border-radius: var(--ordo-card-radius);
+    padding: var(--ordo-card-padding);
+    box-shadow: var(--ordo-shadow-md);
+  }
+  
+  .ordo-card-flat {
+    background-color: var(--ordo-white);
+    border: var(--ordo-border-thin) solid var(--ordo-divider);
+    border-radius: var(--ordo-card-radius);
+    padding: var(--ordo-card-padding);
+  }
+  
+  /* Accent cards */
+  .ordo-card-green {
+    background-color: var(--ordo-green-100);
+    border: none;
+    border-radius: var(--ordo-card-radius);
+    padding: var(--ordo-card-padding);
+  }
+  
+  .ordo-card-pink {
+    background-color: var(--ordo-pink-100);
+    border: none;
+    border-radius: var(--ordo-card-radius);
+    padding: var(--ordo-card-padding);
+  }
+  
+  .ordo-card-yellow {
+    background-color: var(--ordo-yellow-100);
+    border: none;
+    border-radius: var(--ordo-card-radius);
+    padding: var(--ordo-card-padding);
+  }
+  
+  .ordo-card-blue {
+    background-color: var(--ordo-primary-100);
+    border: none;
+    border-radius: var(--ordo-card-radius);
+    padding: var(--ordo-card-padding);
+  }
+}
+
+/* ==========================================
+   INPUT CLASSES
+   ========================================== */
+
+@layer components {
+  .ordo-input {
+    display: block;
+    width: 100%;
+    height: var(--ordo-input-height);
+    padding: 0 var(--ordo-input-padding-x);
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-text-sm);
+    color: var(--ordo-text-primary);
+    background-color: var(--ordo-white);
+    border: var(--ordo-border-thin) solid var(--ordo-divider);
+    border-radius: var(--ordo-input-radius);
+    transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
+  }
+  
+  .ordo-input::placeholder {
+    color: var(--ordo-neutral-300);
+  }
+  
+  .ordo-input:focus {
+    outline: none;
+    border-color: var(--ordo-primary-300);
+    box-shadow: 0 0 0 3px var(--ordo-primary-100);
+  }
+  
+  .ordo-input:disabled {
+    background-color: var(--ordo-neutral-100);
+    cursor: not-allowed;
+  }
+  
+  .ordo-textarea {
+    display: block;
+    width: 100%;
+    min-height: 120px;
+    padding: var(--ordo-space-md);
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-text-sm);
+    color: var(--ordo-text-primary);
+    background-color: var(--ordo-white);
+    border: var(--ordo-border-thin) solid var(--ordo-divider);
+    border-radius: var(--ordo-input-radius);
+    resize: vertical;
+    transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
+  }
+  
+  .ordo-textarea:focus {
+    outline: none;
+    border-color: var(--ordo-primary-300);
+    box-shadow: 0 0 0 3px var(--ordo-primary-100);
+  }
+}
+
+/* ==========================================
+   NAVIGATION CLASSES
+   ========================================== */
+
+@layer components {
+  .ordo-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--ordo-nav-height);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: var(--ordo-border-thin) solid var(--ordo-divider);
+  }
+  
+  .ordo-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .ordo-nav-link {
+    font-family: var(--ordo-font-body);
+    font-size: var(--ordo-text-sm);
+    font-weight: var(--ordo-font-regular);
+    color: var(--ordo-text-primary);
+    text-decoration: none;
+    transition: color 150ms ease-out;
+  }
+  
+  .ordo-nav-link:hover {
+    color: var(--ordo-primary-300);
+  }
+}
+
+/* ==========================================
+   ANIMATION CLASSES
+   ========================================== */
+
+@layer utilities {
+  .ordo-fade-in {
+    animation: ordoFadeIn 0.5s ease-out forwards;
+  }
+  
+  .ordo-fade-in-up {
+    animation: ordoFadeInUp 0.5s ease-out forwards;
+  }
+  
+  .ordo-slide-in-left {
+    animation: ordoSlideInLeft 0.5s ease-out forwards;
+  }
+  
+  .ordo-slide-in-right {
+    animation: ordoSlideInRight 0.5s ease-out forwards;
+  }
+}
+
+@keyframes ordoFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ordoFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ordoSlideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ordoSlideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .ordo-fade-in,
+  .ordo-fade-in-up,
+  .ordo-slide-in-left,
+  .ordo-slide-in-right {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+

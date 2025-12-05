@@ -4,13 +4,10 @@
  * 
  * This file contains:
  * - Tailwind base/components/utilities imports
- * - shadcn/ui theme CSS variables (light + dark)
- * - Custom typography scale variables
+ * - shadcn/ui theme CSS variables (for admin - light + dark)
+ * - Ordo Design System CSS variables (for customer-facing)
  * - Base body styles
  * - Page animations
- * 
- * To customize colors, edit the CSS variables below.
- * Colors are in HSL format for easy theming.
  */
 
 @tailwind base;
@@ -19,7 +16,9 @@
 
 @layer base {
   :root {
-    /* shadcn/ui theme variables (Zinc) */
+    /* ========================================
+       SHADCN/UI THEME (Admin)
+       ======================================== */
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -41,11 +40,116 @@
     --ring: 240 10% 3.9%;
     --radius: 0.5rem;
 
-    /* Typography scale - use these in Tailwind as text-title, text-body, etc. */
-    --font-title: 1.5rem;     /* 24px - page titles */
-    --font-h1: 1.375rem;      /* 22px - section headers */
-    --font-section: 1.125rem; /* 18px - card titles */
-    --font-body: 1rem;        /* 16px - body text */
+    /* Admin typography scale */
+    --font-title: 1.5rem;
+    --font-h1: 1.375rem;
+    --font-section: 1.125rem;
+    --font-body: 1rem;
+
+    /* ========================================
+       ORDO DESIGN SYSTEM (Customer-Facing)
+       ======================================== */
+    
+    /* Primary Blue Scale */
+    --ordo-primary-100: #C9E4F9;
+    --ordo-primary-200: #7BB8D9;
+    --ordo-primary-300: #0099D6;
+    --ordo-primary-400: #0077B3;
+    --ordo-primary-500: #1A5276;
+    
+    /* Neutrals */
+    --ordo-neutral-100: #F0F0F0;
+    --ordo-neutral-200: #D0D0D0;
+    --ordo-neutral-300: #A0A0A0;
+    --ordo-neutral-400: #606060;
+    --ordo-neutral-500: #000000;
+    
+    /* Pink Accent */
+    --ordo-pink-100: #F5E6F0;
+    --ordo-pink-200: #E8B4D0;
+    --ordo-pink-300: #D46F9B;
+    --ordo-pink-400: #A34470;
+    --ordo-pink-500: #6B2D4A;
+    
+    /* Yellow/Orange Accent */
+    --ordo-yellow-100: #F7EED8;
+    --ordo-yellow-200: #F5D99A;
+    --ordo-yellow-300: #F5C24A;
+    --ordo-yellow-400: #F5A623;
+    --ordo-yellow-500: #8B5A2B;
+    
+    /* Green Accent */
+    --ordo-green-100: #DDF2E4;
+    --ordo-green-200: #8DCAA0;
+    --ordo-green-300: #5DB57A;
+    --ordo-green-400: #2E9E4E;
+    --ordo-green-500: #1D6B35;
+    
+    /* Semantic Colors */
+    --ordo-white: #FFFFFF;
+    --ordo-black: #000000;
+    --ordo-surface: #FAFBFC;
+    --ordo-divider: #D0D0D0;
+    
+    /* Typography - Mobile First */
+    --ordo-text-xs: 0.875rem;    /* 14px */
+    --ordo-text-sm: 1rem;        /* 16px */
+    --ordo-text-md: 1rem;        /* 16px mobile, 18px desktop */
+    --ordo-text-lg: 1.125rem;    /* 18px mobile, 20px desktop */
+    --ordo-text-xl: 1.5625rem;   /* 25px mobile, 32px desktop */
+    --ordo-text-2xl: 1.75rem;    /* 28px mobile, 48px desktop */
+    --ordo-text-3xl: 2.25rem;    /* 36px mobile, 64px desktop */
+    
+    /* Line Heights */
+    --ordo-leading-tight: 1.1;
+    --ordo-leading-snug: 1.33;
+    --ordo-leading-normal: 1.5;
+    --ordo-leading-relaxed: 1.625;
+    
+    /* Letter Spacing */
+    --ordo-tracking-tight: -0.02em;
+    --ordo-tracking-normal: 0.009em;
+    --ordo-tracking-wide: 0.03em;
+    
+    /* Spacing */
+    --ordo-space-xs: 0.5rem;     /* 8px */
+    --ordo-space-sm: 0.625rem;   /* 10px */
+    --ordo-space-md: 1rem;       /* 16px */
+    --ordo-space-lg: 1.5rem;     /* 24px */
+    --ordo-space-xl: 2.5rem;     /* 40px */
+    --ordo-space-2xl: 3.5rem;    /* 56px */
+    --ordo-space-3xl: 4.5rem;    /* 72px */
+    
+    /* Border Radius */
+    --ordo-radius-sm: 0.25rem;   /* 4px */
+    --ordo-radius-md: 0.5rem;    /* 8px */
+    --ordo-radius-lg: 1rem;      /* 16px */
+    --ordo-radius-xl: 1.5rem;    /* 24px */
+    
+    /* Shadows */
+    --ordo-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --ordo-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --ordo-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --ordo-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    
+    /* Layout - Mobile */
+    --ordo-container-padding: 1.5rem;  /* 24px */
+    --ordo-nav-height: 70px;
+    --ordo-button-height: 44px;
+  }
+  
+  /* Desktop overrides */
+  @media (min-width: 1280px) {
+    :root {
+      --ordo-text-md: 1.125rem;   /* 18px */
+      --ordo-text-lg: 1.25rem;    /* 20px */
+      --ordo-text-xl: 2rem;       /* 32px */
+      --ordo-text-2xl: 3rem;      /* 48px */
+      --ordo-text-3xl: 4rem;      /* 64px */
+      
+      --ordo-nav-height: 86px;
+      --ordo-button-height: 59px;
+    }
   }
 
   .dark {
