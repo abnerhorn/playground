@@ -68,12 +68,8 @@ export function Nav({
 
           {/* Desktop CTAs */}
           <div className="hidden desktop:flex items-center gap-ordo-md">
-            <Button asChild>
-              <Link href={ctaHref}>{ctaText}</Link>
-            </Button>
-            <Button variant="secondary" asChild>
-              <Link href={secondaryCtaHref}>{secondaryCtaText}</Link>
-            </Button>
+            <Button href={ctaHref}>{ctaText}</Button>
+            <Button variant="secondary" href={secondaryCtaHref}>{secondaryCtaText}</Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -101,12 +97,8 @@ export function Nav({
             </div>
             
             <div className="flex flex-col gap-ordo-sm mt-ordo-lg pt-ordo-lg border-t border-ordo-divider">
-              <Button fullWidth asChild>
-                <Link href={ctaHref}>{ctaText}</Link>
-              </Button>
-              <Button variant="secondary" fullWidth asChild>
-                <Link href={secondaryCtaHref}>{secondaryCtaText}</Link>
-              </Button>
+              <Button fullWidth href={ctaHref}>{ctaText}</Button>
+              <Button variant="secondary" fullWidth href={secondaryCtaHref}>{secondaryCtaText}</Button>
             </div>
           </div>
         </div>
@@ -195,10 +187,4 @@ function CloseIcon({ className }: { className?: string }) {
   )
 }
 
-// Make Button accept asChild prop for Link composition
-declare module './Button' {
-  interface ButtonProps {
-    asChild?: boolean
-  }
-}
 
