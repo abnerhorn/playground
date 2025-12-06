@@ -31,6 +31,7 @@ interface ButtonAsLink extends ButtonBaseProps {
   href: string
   target?: string
   rel?: string
+  onClick?: () => void
 }
 
 type ButtonProps = ButtonAsButton | ButtonAsLink
@@ -78,13 +79,14 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
     )
 
     if ('href' in props && props.href) {
-      const { href, target, rel, ...linkProps } = rest as ButtonAsLink
+      const { href, target, rel, onClick, ...linkProps } = rest as ButtonAsLink
       return (
         <Link
           ref={ref as React.Ref<HTMLAnchorElement>}
           href={href}
           target={target}
           rel={rel}
+          onClick={onClick}
           className={baseStyles}
           {...linkProps}
         >
